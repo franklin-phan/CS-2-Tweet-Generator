@@ -1,19 +1,14 @@
 import random
 import sys
 
+
 def rearrange(words_list):
-    for i, word in enumerate(words_list):
-        rand_index = random.randint(0, len(words_list) - 1)
-        words_list[i] = words_list[rand_index]
-        words_list[rand_index] = word
-    return words_list
-
-
+    words_rearranged = []
+    while len(words_list) > 0:
+        random_index = random.randrange(len(words_list))
+        item = words_list.pop(random_index)
+        words_rearranged.append(item)
+    return words_rearranged
 if __name__ == "__main__":
-    words_list = []
-
-    for arg in range(1, len(sys.argv)):
-        words_list.append(sys.argv[arg])
-
-    shuffled_list = rearrange(words_list)
-    print(shuffled_list)
+   words_list = sys.argv[1:] #put arguments in a list
+   print(rearrange(words_list))
