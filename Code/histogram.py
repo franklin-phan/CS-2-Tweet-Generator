@@ -4,10 +4,8 @@
 from sys import argv
 # function that takes a source text argument and returns a histogram data structure
 # that stores each unique word and frequency
-def histogram(file):
+def histogram(words):
     histogram = {}
-    with open(file,'r') as f:
-        words = f.read().splitlines()
     for word in words:
         word = word.lower()
         if word in histogram.keys():
@@ -28,9 +26,11 @@ def frequency(search,histogram):
         return 0
 
 if __name__ == '__main__':
+    with open('despacito.txt','r') as f:
+        words = f.read().splitlines()
     search = argv[1]
-    h = histogram('despacito.txt')
-    print(histogram('despacito.txt'))
+    h = histogram(words)
+    print(histogram(words))
     print(unique_words(h))
     print(frequency(search,h))
 
