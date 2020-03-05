@@ -36,6 +36,7 @@ class MarkovChain:
     def print_chain(self):
         for word, histogram in self.markov_chain.items():
             print(word, histogram.dictionary_histogram)
+            #hello
 
 
 
