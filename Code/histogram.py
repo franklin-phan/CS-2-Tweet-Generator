@@ -5,14 +5,14 @@ from sys import argv
 # function that takes a source text argument and returns a histogram data structure
 # that stores each unique word and frequency
 def histogram(words):
-    histogram = {}
+    hist = {}
     for word in words:
         word = word.lower()
-        if word in histogram.keys():
-            histogram[word] += 1
+        if word in hist.keys():
+            hist[word] += 1
         else:
-            histogram[word] = 1
-    return (histogram)
+            hist[word] = 1
+    return (hist)
 
 
 # function that takes histogram argument and returns count of unique words
