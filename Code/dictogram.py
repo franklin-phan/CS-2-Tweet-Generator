@@ -44,7 +44,7 @@ class Dictogram(dict):
             if dart > total_probability and dart <=total_probability + prob:
                 return key
             total_probability += prob
-
+    
 
 def print_histogram(word_list):
     print()

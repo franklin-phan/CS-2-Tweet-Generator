@@ -1,29 +1,23 @@
-import random
-import sys
-from dictogram import Dictogram
+
+
+from random import randint
+from histogram import histogram
 
 def sample(histogram):
-    tokens = 0
-    tokens += sum(histo.values())
-    total_probability = 0
-    dart = random.random()
-    for key in histo.keys():
-        prob = histo[key]/tokens
-        if dart > total_probability and dart <=total_probability + prob:
-            return key
-        total_probability += prob
 
-def sample_test(histogram):
-    sample_list = [sample(histogram) for _ in range(10000)]
-    sample_histogram = Dictogram(sample_list)
+    tokens = sum(count for word, count in histogram.items()) #count total tokens
+    dart = randint(1,tokens)
 
-    for item in sample_histogram:
-        print (f"{item}: {sample_histogram[item]}/10000")
+    fence = 0 #border of where each word splits the number line
+    for word, count in histogram.items():
+        fence += count # Move this word's fencce birder to the right
+        if fence >= dart: #Check if this word's fence is past the dart
+            return word # fence is past the dart, so choose this word 
+    
 
 if __name__ == "__main__":
-    file = 'despacito.txt'
-    with open(file, 'r') as f:
-        words = f.read().split()
-        histo = Dictogram(words)
-    print (sample(histo))
-    sample_test(histo)
+    filename = "despacito.txt"
+    lines = open(filename,'r').read().splitlines()
+    h = histogram(lines)
+    #print(h)
+    print(sample(h))

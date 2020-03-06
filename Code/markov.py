@@ -1,4 +1,5 @@
 from dictogram import Dictogram
+from random import choice
 
 class MarkovChain:
 
@@ -23,27 +24,48 @@ class MarkovChain:
                 #get the histogram for that word in the chain
                 histogram = markov_chain[current_word]
                 #add to count
-                histogram.dictionary_histogram[next_word] = histogram.dictionary_histogram.get(next_word, 0) + 1
+                histogram[next_word] = histogram.get(next_word, 0) + 1
             else: #first entry
                 markov_chain[current_word] = Dictogram([next_word])
 
         return markov_chain
 
+    def get_random_word(self): #choose a random for from markov chain's keys, which are unique
+        random_word = choice(list(self.markov_chain.keys())) #must convert these dic.keys() to list
+        return random_word
+
     def walk(self, num_words):
         #TODO: generate a sentence num_words long using the markov chain
         sentence = ""
-
-        for _ in range(num_words):
-            sentence += self.first_word + " "
-            histogram = self.markov_chain[self.first_word]
-
-            self.fir = histogram.sample()
+        first_word = self.get_random_word() 
+        
+        print("FIRST WORD IS", first_word)
+        sentence += first_word + " "
+        index = 1
+        while index < num_words: 
+            current_word = first_word
+            for word, dictogram in self.markov_chain.items(): 
+                if current_word == word: #look for our current word in our markov chain
+                    current_word_dictogram = dictogram
+                    print("From word =", word, "DICTOGRAM I AM SAMPLING IS", current_word_dictogram)
+                    random_weighted_word = dictogram.sample() #get the random_weighted_word
+                    print("Sample returned is", random_weighted_word)
+                    current_word = random_weighted_word #assign random_word as the current_word
+                    if index == num_words - 1: #if this is the last word, add "."
+                        sentence += current_word + "."
+                    else: #if not last word, add a space in the end
+                        sentence += current_word + " "
+                    break
+                else:
+                    continue
+            index += 1
+        print("SENTENCE =", sentence)
         return sentence
         
 
     def print_chain(self):
         for word, histogram in self.markov_chain.items():
-            print(word, histogram.dictionary_histogram)
+            print(word, histogram)
 
 
 
